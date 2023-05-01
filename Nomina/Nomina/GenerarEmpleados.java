@@ -4,16 +4,16 @@ import java.util.Random;
 public abstract class GenerarEmpleados {
     static Random rnd = new Random();
     private static ArrayList<Puesto> puestos = crearListaPuestos();
-    private static String [] nombresMasculinos = {"Pedro","Pablo","Juan","Ignacio","Diego","Mario","Jose","Panfilo","Angel","Saul"};
-    private static String [] nombresFemeninos = {"Carla","Paula","Sofia","Julia","Alma","Maria","Frida","Julieta","Abril","Alexa"};
+    private static String [] nombresMasculinos = {"Pedro","Pablo","Juan","Ignacio","Diego","Mario","Jose","Panfilo","Angel","Saul", "Isaac"};
+    private static String [] nombresFemeninos = {"Carla","Paula","Sofia","Julia","Alma","Maria","Frida","Julieta","Abril","Alexa", "Melania"};
 
     public static EmpleadoBase crearEmpleadoBase(int sexo){
         // 0 = hombre ; 1 = mujer
         EmpleadoBase eB;
         if(sexo == 0){
-           eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(10)], (byte)(rnd.nextInt(47)+18), 'm', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
+           eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], (byte)(rnd.nextInt(47)+18), 'm', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
         } else {
-           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(10)], (byte)(rnd.nextInt(47)+18), 'f', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
+           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(nombresFemeninos.length)], (byte)(rnd.nextInt(47)+18), 'f', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
         }
         return eB;
     }

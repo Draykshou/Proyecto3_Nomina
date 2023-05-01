@@ -13,40 +13,45 @@ public class Menu {
    
     public static void main(String[]args){
         inicializarListaEmpleados(empleados);
-        int opcion;
+        String opcion;
         do {
             limpiarConsola();
             opcion = elegirOpcion();
             switch(opcion){
-                case 1:
-                imprimirNomina(empleados);
-                pausarPrograma();
-                break;
-            case 2: 
-                // imprimirNomina(empleados);
-                // modificarFaltas(empleados);
-                // pausarPrograma();  
-                break;
-            case 3:
-                System.out.println("Saliendo del programa.");
-                break;
-            default : 
-                System.out.println("Ingrese una entra valida.");
-                pausarPrograma();
-                break;
+                case "1": // Imprimir Nomina
+                    imprimirNomina(empleados);
+                    pausarPrograma();
+                    break;
+                case "2": // Ver empleado
+                    // imprimirNomina(empleados);
+                    // modificarFaltas(empleados);
+                    System.out.println("Opcion 2");
+                    pausarPrograma();  
+                    break;
+                case "3": // Modiicar Empleado
+                    System.out.println("Modificar empleado");
+                    pausarPrograma();
+                    break;
+                case "4": // Salir
+                    System.out.println("Saliendo del programa.");
+                    break;
+                default : // entrada invalida
+                    System.out.println("Ingrese una entrada valida.");
+                    pausarPrograma();
+                    break;
             }
             
-        } while (opcion != 3);
+        } while (!opcion.equals("4"));
     }
     
-    public static int elegirOpcion(){
+    public static String elegirOpcion(){
         Scanner sc = new Scanner(System.in);
         System.out.println("¿Que desea realizar?\n");
         System.out.println("1. Imprimir la nomina de empleados.");
         System.out.println("2. Ver Empleado.");
         System.out.println("3. Modificar Empleado.");
-        System.out.println("3. Salir del programa.\n");
-        return sc.nextInt();
+        System.out.println("4. Salir del programa.\n");
+        return sc.nextLine().trim();
     }
 
     public static void imprimirNomina(ArrayList<Empleado> e){
@@ -81,6 +86,7 @@ public class Menu {
     //     }
     // }
     
+    // Metodo inicializador
     public static ArrayList<Empleado> inicializarListaEmpleados(ArrayList<Empleado> e){
         for(int i = 0; i < 13; i++){
             e.add(GenerarEmpleados.crearEmpleadoBase(rnd.nextInt(2)));
