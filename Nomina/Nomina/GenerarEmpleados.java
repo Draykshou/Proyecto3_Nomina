@@ -11,9 +11,9 @@ public abstract class GenerarEmpleados {
         // 0 = hombre ; 1 = mujer
         EmpleadoBase eB;
         if(sexo == 0){
-           eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], (byte)(rnd.nextInt(47)+18), 'm', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
+           eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], (byte)(rnd.nextInt(47)+18), 'm', AsigarPuesto(), "2301" + (rnd.nextInt(8001)+1001), rnd.nextInt(4));
         } else {
-           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(nombresFemeninos.length)], (byte)(rnd.nextInt(47)+18), 'f', AsigarPuesto(), "2301" + (rnd.nextInt(5001)+1001));
+           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(nombresFemeninos.length)], (byte)(rnd.nextInt(47)+18), 'f', AsigarPuesto(), "2301" + (rnd.nextInt(8001)+1001), rnd.nextInt(4));
         }
         return eB;
     }

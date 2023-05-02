@@ -23,16 +23,11 @@ public class Menu {
                     pausarPrograma();
                     break;
                 case "2": // Ver empleado
-                    // imprimirNomina(empleados);
-                    // modificarFaltas(empleados);
-                    System.out.println("Opcion 2");
+                    imprimirNomina(empleados);
+                    verEmpleado();
                     pausarPrograma();  
                     break;
-                case "3": // Modiicar Empleado
-                    System.out.println("Modificar empleado");
-                    pausarPrograma();
-                    break;
-                case "4": // Salir
+                case "3": // Salir
                     System.out.println("Saliendo del programa.");
                     break;
                 default : // entrada invalida
@@ -41,7 +36,7 @@ public class Menu {
                     break;
             }
             
-        } while (!opcion.equals("4"));
+        } while (!opcion.equals("3"));
     }
     
     public static String elegirOpcion(){
@@ -49,8 +44,7 @@ public class Menu {
         System.out.println("¿Que desea realizar?\n");
         System.out.println("1. Imprimir la nomina de empleados.");
         System.out.println("2. Ver Empleado.");
-        System.out.println("3. Modificar Empleado.");
-        System.out.println("4. Salir del programa.\n");
+        System.out.println("3. Salir del programa.\n");
         return sc.nextLine().trim();
     }
 
@@ -64,27 +58,23 @@ public class Menu {
         System.out.println("-----------------------------------------------------------------------------------------------------------------");
     }
     
-    // public static void modificarFaltas(ArrayList<Empleado> e){
-    //      Scanner sc = new Scanner(System.in);
-    //      System.out.println("¿Desea modificar las faltas?\n1.Si\n2.No");
-    //      int opcionMod = sc.nextInt();
-       
-    //     switch (opcionMod) {
-    //         case 1:
-    //             System.out.println("Ingrese el numero de empleado.");
-    //             String numEmpleadoBusca = sc.nextLine();
-    //             if (e.get(opcionMod).getNumEmpleado().contains(numEmpleadoBusca)) {
-    //             }
-    //             break; 
-    //         case 2:
-    //             System.out.println("");
-    //             break;
-    //         default:
-    //             System.out.println("Ingrese una entrada valida.");
-    //             pausarPrograma();
-    //             break;
-    //     }
-    // }
+    public static void verEmpleado(){
+        System.out.println("Ingrese el numero de empleado: ");
+        String numEmpleado = sc.nextLine();
+        boolean hayEmpleado = false;
+        for(Empleado e : empleados){
+            if(e.getNumEmpleado().equals(numEmpleado)){
+                limpiarConsola();
+                System.out.println("El empleado si existe, es:");
+                System.out.format("| %-12s | %-10s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total", "N° Faltas");
+                System.out.println(e.mostrarDatos());
+                hayEmpleado = true;
+            }
+        }
+        if(!hayEmpleado){
+            System.out.println("No existe el empleado.");
+        }
+    }
     
     // Metodo inicializador
     public static ArrayList<Empleado> inicializarListaEmpleados(ArrayList<Empleado> e){

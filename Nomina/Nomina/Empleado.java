@@ -16,6 +16,7 @@ public abstract class Empleado extends Persona{
     }
 
     abstract public float calcularSueldo();
+    abstract public String mostrarDatos();
 
     // calcular si el impuesto sera del 0% o del 3%
     public float AsignarImpuesto(float sueldoBruto){
