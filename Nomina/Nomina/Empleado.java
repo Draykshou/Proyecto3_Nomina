@@ -2,17 +2,13 @@ package Nomina;
 public abstract class Empleado extends Persona{
     protected String numEmpleado;
 
-    public Empleado(String nombre, byte edad, char sexo, String numEmpleado){
-        super(nombre, edad,sexo);
+    public Empleado(String nombre, String apellido,byte edad, char sexo, String numEmpleado){
+        super(nombre, apellido, edad,sexo);
         this.numEmpleado = numEmpleado;
     }
 
     public String getNumEmpleado(){
         return numEmpleado;
-    }
-
-    public void setNumEmpleado(String numEmpleado){
-        this.numEmpleado = numEmpleado;
     }
 
     abstract public float calcularSueldo();

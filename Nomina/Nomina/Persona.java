@@ -1,11 +1,13 @@
 package Nomina;
 public class Persona{
     private String nombre;
+    private String apellido;
     private byte edad;
     private char sexo;
 
-    public Persona(String nombre, byte edad, char sexo){
+    public Persona(String nombre, String apellido, byte edad, char sexo){
         this.nombre = nombre;
+        this.apellido = apellido;
         this.edad = edad;
         this.sexo = Character.toUpperCase(sexo);
     }
@@ -17,6 +19,14 @@ public class Persona{
     public void setNombre(String nombre){
         this.nombre = nombre;
     }
+   
+    public String getApellido() {
+		return apellido;
+	}
+	
+    public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 
     public byte getEdad(){
         return edad;
@@ -35,6 +45,6 @@ public class Persona{
     }
 
     public String toString(){
-        return String.format(" %-10.10s | %-4s |", this.nombre,this.sexo);
+        return String.format(" %-20.20s | %-4s |", this.nombre+" "+this.apellido, this.sexo);
     }
 }

@@ -4,8 +4,6 @@ package Nomina;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
-
-
 public class Menu {    
     private static ArrayList<Empleado> empleados = new ArrayList<Empleado>();
     private static Random rnd = new Random();
@@ -48,29 +46,30 @@ public class Menu {
         return sc.nextLine().trim();
     }
 
-    public static void imprimirNomina(ArrayList<Empleado> e){
-        String salida = String.format("| %-12s | %-10s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total");
+      public static void imprimirNomina(ArrayList<Empleado> e){
+        String salida = String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total");
         for(int i = 0; i < e.size(); i++){
             salida += e.get(i).toString();
         }
-        System.out.println("\n-----------------------------------------------------------------------------------------------------------------");
+        System.out.println("\n---------------------------------------------------------------------------------------------------------------------------");
         System.out.print(salida);
-        System.out.println("-----------------------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
     }
     
     public static void verEmpleado(){
         System.out.println("Ingrese el numero de empleado: ");
-        String numEmpleado = sc.nextLine();
+        String numEmpleado = sc.nextLine().trim();
         boolean hayEmpleado = false;
         for(Empleado e : empleados){
             if(e.getNumEmpleado().equals(numEmpleado)){
                 limpiarConsola();
                 System.out.println("El empleado si existe, es:");
-                System.out.format("| %-12s | %-10s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total", "N° Faltas");
+                System.out.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total", "N° Faltas");
                 System.out.println(e.mostrarDatos());
                 hayEmpleado = true;
             }
         }
+        // En caso de que no exista el empleado o se ingrese una entrada no valida
         if(!hayEmpleado){
             System.out.println("No existe el empleado.");
         }

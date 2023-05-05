@@ -4,8 +4,8 @@ public class EmpleadoBase extends Empleado{
     private int numfaltas;
     
 
-    public EmpleadoBase(String nombre, byte edad, char sexo, Puesto puesto, String numEmpleado, int numfaltas){
-        super(nombre, edad, sexo, numEmpleado);
+    public EmpleadoBase(String nombre, String apellido, byte edad, char sexo, Puesto puesto, String numEmpleado, int numfaltas){
+        super(nombre, apellido, edad, sexo, numEmpleado);
         this.puesto = puesto;
         this.numfaltas = numfaltas;
     }
