@@ -11,23 +11,21 @@ public abstract class Empleado extends Persona{
         return numEmpleado;
     }
 
-    abstract public float calcularSueldo();
-    abstract public String mostrarDatos();
+    // Metodos Abstractos
+    abstract public float sueldo();
+    abstract public float sueldoBruto();
+    abstract public String ImprimirDatosNomina();
 
-    // calcular si el impuesto sera del 0% o del 3%
-    public float AsignarImpuesto(float sueldoBruto){
-        float impuestos;
+    public float calcularImpuestos(float sueldoBruto){
+        float impuestos = 0;
         if(sueldoBruto < 800){
             impuestos = 0;
         }
         else{
             impuestos = 0.03f;
         }
-        return impuestos;
-    }
-
-    public float calcularImpuestos(float sueldoBruto){
-        return (sueldoBruto * AsignarImpuesto(sueldoBruto));
+        float impuestoTotal = (sueldoBruto * impuestos);
+        return Math.round(impuestoTotal * 100) / 100f;
     }
 
     public String toString(){

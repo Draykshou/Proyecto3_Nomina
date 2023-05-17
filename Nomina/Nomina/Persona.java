@@ -45,6 +45,6 @@ public class Persona{
     }
 
     public String toString(){
-        return String.format(" %-20.20s | %-4s |", this.nombre+" "+this.apellido, this.sexo);
+        return String.format(" %-20.20s | %-4s | %-4s |", this.nombre+" "+this.apellido, this.sexo, this.edad);
     }
 }

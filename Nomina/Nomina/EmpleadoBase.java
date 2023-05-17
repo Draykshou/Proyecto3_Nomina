@@ -2,7 +2,6 @@ package Nomina;
 public class EmpleadoBase extends Empleado{
     private Puesto puesto;
     private int numfaltas;
-    
 
     public EmpleadoBase(String nombre, String apellido, byte edad, char sexo, Puesto puesto, String numEmpleado, int numfaltas){
         super(nombre, apellido, edad, sexo, numEmpleado);
@@ -17,21 +16,26 @@ public class EmpleadoBase extends Empleado{
     public void setNumFaltas(int numfaltas){
         this.numfaltas = numfaltas;
     }
-
-    public float getSueldoBruto(){
-        return this.puesto.getSueldo() - ((puesto.getSueldo()/14) * numfaltas);
-    }
-
-    public float calcularSueldo(){
-        return getSueldoBruto() - calcularImpuestos(getSueldoBruto());
-    }
     
-    public String mostrarDatos(){
+    @Override
+    public float sueldo(){
+        float sueldo = sueldoBruto() - calcularImpuestos(sueldoBruto());
+        return  Math.round(sueldo * 100) / 100f;
+    }
+
+    @Override
+    public float sueldoBruto(){
+        float bruto = this.puesto.getSueldo() - ((puesto.getSueldo()/14) * numfaltas);
+        return Math.round(bruto * 100) / 100f;
+    }
+
+    @Override    
+    public String ImprimirDatosNomina(){
         String salida = "";
         if(getSexo() == 'M'){
-            salida = super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |", puesto.getNombrePuestoMasculino(), getSueldoBruto(), 0.0, calcularImpuestos(getSueldoBruto()),calcularSueldo(), getNumFaltas())+"\n";
+            salida = String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n", numEmpleado, getNombre()+" "+getApellido(), getSexo(), puesto.getNombrePuestoMasculino(), sueldoBruto(), 0.0, calcularImpuestos(sueldoBruto()), sueldo());
         } else{
-            salida = super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |", puesto.getNombrePuestoFemenino(),  getSueldoBruto(), 0.0, calcularImpuestos(getSueldoBruto()), calcularSueldo(), getNumFaltas())+"\n";
+            salida = String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n", numEmpleado, getNombre() + " " + getApellido(), getSexo(), puesto.getNombrePuestoFemenino(), sueldoBruto(), 0.0, calcularImpuestos(sueldoBruto()), sueldo());
         }
         return salida;
     }
@@ -39,10 +43,12 @@ public class EmpleadoBase extends Empleado{
     public String toString(){
         String salida = "";
         if(getSexo() == 'M'){
-            salida = super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s |", puesto.getNombrePuestoMasculino(), getSueldoBruto(), 0.0, calcularImpuestos(getSueldoBruto()),calcularSueldo())+"\n";
+            salida = String.format("| %-12s | %-20s | %-4s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Edad", "Puesto", "Sueldo Bruto", "Bono", "Impuestos", "Sueldo Total", "N° Faltas");
+            salida += super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |", puesto.getNombrePuestoMasculino(), sueldoBruto(), 0.0, calcularImpuestos(sueldoBruto()), sueldo(), getNumFaltas())+"\n";
         } else{
-            salida = super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s |", puesto.getNombrePuestoFemenino(),  getSueldoBruto(), 0.0, calcularImpuestos(getSueldoBruto()), calcularSueldo())+"\n";
+            salida = String.format("| %-12s | %-20s | %-4s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Edad", "Puesto", "Sueldo Bruto", "Bono", "Impuestos", "Sueldo Total", "N° Faltas");
+            salida += super.toString() + String.format(" %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |", puesto.getNombrePuestoFemenino(),  sueldoBruto(), 0.0, calcularImpuestos(sueldoBruto()), sueldo(), getNumFaltas())+"\n";    
         }
         return salida;
     }
-} 
+}
