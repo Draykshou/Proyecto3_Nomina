@@ -4,7 +4,6 @@ package Nomina;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.Arrays;
 public class Menu {    
     private static ArrayList<Empleado> empleados = new ArrayList<Empleado>();
     private static Random rnd = new Random();
@@ -167,7 +166,6 @@ public class Menu {
     }
 
     public static int [] CantidadBilletes(ArrayList<Empleado> em){
-        float totalS = calcularTotalPagar(empleados);
         int[] denominaciones = {500, 200, 100, 50, 20, 10, 5, 2, 1};
         int[] cantidadDenominaciones = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
