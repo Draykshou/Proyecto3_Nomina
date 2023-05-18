@@ -4,6 +4,7 @@ package Nomina;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 public class Menu {    
     private static ArrayList<Empleado> empleados = new ArrayList<Empleado>();
     private static Random rnd = new Random();
@@ -31,9 +32,13 @@ public class Menu {
 				modificarFaltasEmpleado();
 				pausarPrograma();
 				break;
-			case "4": // Salir
-				System.out.println("Saliendo del programa.");
-				break;
+            case "4":
+                System.out.println(ImprimirTablaDivisas(CantidadBilletes(empleados)));
+                pausarPrograma();
+                break;
+            case "5": // Salir
+                    System.out.println("Saliendo del programa.");
+                    break;
 			default: // entrada invalida
 				System.out.println("Ingrese una entrada valida.");
 				pausarPrograma();
@@ -47,7 +52,8 @@ public class Menu {
         System.out.println("1. Imprimir la nomina de empleados.");
         System.out.println("2. Ver Empleado.");
         System.out.println("3. Modificar Empleado.");
-        System.out.println("4. Salir del programa.\n");
+        System.out.println("4. Cantidad de dinero para pagar a empleados temporales.\n");
+        System.out.println("5. Salir del programa.\n");
         return sc.nextLine().trim();
     }
 
@@ -148,7 +154,50 @@ public class Menu {
         }
         return e;
     }
-    //---------------------------------------------------------------------------------------------------------
+    
+    public static float calcularTotalPagar(ArrayList<Empleado> em){
+        float totalSueldoEmpleados = 0;
+        for (Empleado e : em) {
+            if(!(e instanceof EmpleadoBase)){
+                totalSueldoEmpleados += e.sueldo();    
+            }
+            
+        }
+        return Math.round(totalSueldoEmpleados * 100) / 100f;
+    }
+
+    public static int [] CantidadBilletes(ArrayList<Empleado> em){
+        float totalS = calcularTotalPagar(empleados);
+        int[] denominaciones = {500, 200, 100, 50, 20, 10, 5, 2, 1};
+        int[] cantidadDenominaciones = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        for (Empleado e : em) {
+            float sueldoE = e.sueldo();
+            if(!(e instanceof EmpleadoBase)){
+                 for (int i = 0; i < denominaciones.length; i++) {
+                    cantidadDenominaciones [i] += (int)sueldoE / denominaciones[i];
+                    sueldoE %= denominaciones[i];
+                 }
+            }
+        }
+        return cantidadDenominaciones;
+    }
+
+    public static String ImprimirTablaDivisas(int [] divisas){
+        String salida = String.format("| %-14s | %-14s | %-14s |%n","Denominacion", "Cantidad", "Total");
+        int[] denominaciones = {500, 200, 100, 50, 20, 10, 5, 2, 1};
+        for(int i = 0; i < denominaciones.length; i++){
+            salida += String.format("| %-14s | %-14s | %-14s |%n", denominaciones[i], divisas[i], denominaciones[i] * divisas[i]);
+        }
+
+        int totalDenominaciones = 0;
+        for (int i = 0; i < denominaciones.length; i++) {
+            totalDenominaciones += denominaciones[i];
+        }
+
+        salida += String.format("| %-14s | %-14s | %-14s |%n", "", totalDenominaciones, (int)calcularTotalPagar(empleados));
+        return salida;
+    }
 
     // -------------------------------------Metodos esteticos--------------------------------------------------
     public static void limpiarConsola() {
@@ -160,5 +209,5 @@ public class Menu {
         System.out.print("\nPresiona enter para continuar  . . . ");
         sc.nextLine();
     }
-    //----------------------------------------------------------------------------------------------------------
+
 }
