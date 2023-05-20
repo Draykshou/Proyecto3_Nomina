@@ -226,28 +226,54 @@ public class Menu {
         }
         return cantidadDenominaciones;
     }
+
+    public static int [] CantidadTotalBilletes(ArrayList<Empleado> em){
+        int[] denominaciones = {500, 200, 100, 50, 20, 10, 5, 2, 1};
+        int[] cantidadDenominaciones = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+        for (Empleado e : em) {
+            float sueldoE = e.sueldo();
+            if(!(e instanceof EmpleadoBase)){
+                 for (int i = 0; i < denominaciones.length; i++) {
+                    cantidadDenominaciones [i] += (int)sueldoE / denominaciones[i];
+                    sueldoE %= denominaciones[i];
+                 }
+            }
+        }
+        return cantidadDenominaciones;
+    }
     
     public static String ImprimirTablaDivisas(int [][] divisas, ArrayList<Empleado> e){
-        String salida = String.format("| %-14s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-10s | %-12s |%n","N° Empleado", "500", "200", "100", "50", "20", "10", "5", "2", "1", "Centavos", "Total:");
-        
+        String salida = String.format("| %-14s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-8s | %-12s |%n","N° Empleado", "500", "200", "100", "50", "20", "10", "5", "2", "1", "Centavos", "Total:");
+        int[] cantDenominaciones = CantidadTotalBilletes(empleados);
+        double totalCentavos = 0;
         for (int i = 0; i < divisas.length; i++) {
-                salida += String.format("| %-14s |", e.get(i).getNumEmpleado());
-                for (int j = 0; j < divisas[0].length + 1; j++) {
-                    if(j < divisas[0].length){
-                        salida += String.format( " %-8s |", divisas[i][j]);
-                    }
-                    else{
-                        salida += String.format( " %-10s |", Math.round((e.get(i).sueldo() - (int)e.get(i).sueldo()) * 100) / 100f);
-                    }
+            salida += String.format("| %-14s |", e.get(i).getNumEmpleado());
+            for (int j = 0; j < divisas[0].length + 1; j++) {
+                if(j < divisas[0].length){
+                    salida += String.format( " %-8s |", divisas[i][j]);
                 }
-                salida += String.format(" %-12s |%n", e.get(i).sueldo());
+                else{
+                    salida += String.format( " %-8s |", Math.round((e.get(i).sueldo() - (int)e.get(i).sueldo()) * 100) / 100f);
+                    totalCentavos += Math.round((e.get(i).sueldo() - (int)e.get(i).sueldo()) * 100) / 100f;
+                    
+                }
             }
-        // int totalDenominaciones = 0;
-        // for (int i = 0; i < denominaciones.length; i++) {
-        //     totalDenominaciones += denominaciones[i];
-        // }
+            salida += String.format(" %-12s |%n", e.get(i).sueldo());
+        }
 
-        // salida += String.format("| %-14s | %-14s | %-14s |%n", "", totalDenominaciones, (int)calcularTotalPagar(empleados));
+        salida += String.format("| %-14s |", "Total: ");
+
+        for(int i = 0; i < cantDenominaciones.length + 1; i++){
+            if(i < cantDenominaciones.length){
+                salida += String.format(" %-8s |", cantDenominaciones[i]);
+            }
+            else{
+                salida += String.format(" %-8s |",  Math.round(totalCentavos * 100) / 100f);
+            }
+        }
+        salida += String.format(" %-12s |%n", calcularTotalPagar(empleados));
+
         return salida;
     }
 

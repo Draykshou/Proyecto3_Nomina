@@ -35,10 +35,10 @@ public abstract class GenerarEmpleados {
     public static EmpleadoHora crearEmpleadoHora(int sexo){
         EmpleadoHora eH;
         if(sexo == 0){
-            eH = new EmpleadoHora(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'm', "2303"+generarNumEmpleado(), rnd.nextInt(41)+20);     
+            eH = new EmpleadoHora(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'm', "2303"+generarNumEmpleado(), rnd.nextInt(101)+20);     
         }
         else{
-            eH = new EmpleadoHora(nombresFemeninos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'f', "2303"+generarNumEmpleado(), rnd.nextInt(41)+20);  
+            eH = new EmpleadoHora(nombresFemeninos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'f', "2303"+generarNumEmpleado(), rnd.nextInt(101)+20);  
         }
         return eH;
     }

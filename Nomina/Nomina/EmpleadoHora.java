@@ -16,11 +16,11 @@ public class EmpleadoHora extends Empleado{
     
     public float bonos(){
       float bono = 0;
-        if (horasTrabajadas >= 40) {
+        if (horasTrabajadas >= 80) {
             if (getSexo() == 'M') {
-                bono = + 600;
+                bono = + 1200;
             } else {
-                bono = + 300;
+                bono = + 600;
             }
         }
         return bono;
@@ -33,8 +33,8 @@ public class EmpleadoHora extends Empleado{
         if (horasTrabajadas<=80) {
             sueldoBruto = 40 * horasTrabajadas;
         } else {
-            horasExtras = horasExtras - 80;
-            sueldoBruto = 80 * 40 + horasExtras * 50;
+            horasExtras = horasTrabajadas - 80;
+            sueldoBruto = (80 * 40) + (horasExtras * 50);
         }
         return sueldoBruto + bonos();
     }
