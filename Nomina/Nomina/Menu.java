@@ -122,37 +122,37 @@ public class Menu {
 		for (Empleado e : empleados) {
 			if (e.getNumEmpleado().equals(numEmpleado)) {
 				limpiarConsola();
-				System.out.println("\nEl empleado si existe, es:");
-				System.out.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Puesto", "Sueldo Bruto", "Bono", "Impuestos", "Sueldo Total","N° Faltas");
-				System.out.println(e.toString());
-				hayEmpleado = true;
-				String opcionModifFaltas;
-				System.out.println("¿Desea modificar el numero de faltas?\n1.Si\n2.No" );
-				opcionModifFaltas = sc.nextLine().trim();
-                limpiarConsola();
-                switch (opcionModifFaltas) {
-                    case "1":
-                        System.out.println("Ingrese el numero de faltas:");
-                        int nwNumFaltas = sc.nextInt();
-                        sc.nextLine();
-                        ((EmpleadoBase) e).setNumFaltas(nwNumFaltas);
-                        System.out.println("\n");
-                        System.out.println("Se ha modificado dejando al trabajador con lo siguiente: ");
-                        System.out.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s | %-10s |%n","N° Empleado", "Nombre", "Sexo", "Puesto", "Sueldo Bruto", "Bono", "Impuestos", "Sueldo Total","N° Faltas");
-                        System.out.println(e.toString());
-                        break;
-                    case "2":
-                        System.out.println("Regresando al menu...");
-                        break;
-                    default:
-                        System.out.println("Ingrese una entrada valida.");
-                        break;
+                if(e instanceof EmpleadoBase){
+                    System.out.println("\nEl empleado si existe, es:");
+                    System.out.println(e.toString());
+                    hayEmpleado = true;
+                    String opcionModifFaltas;
+                    System.out.println("¿Desea modificar el numero de faltas?\n1.Si\n2.No" );
+                    opcionModifFaltas = sc.nextLine().trim();
+                    limpiarConsola();
+                    switch (opcionModifFaltas) {
+                        case "1":
+                            System.out.println("Ingrese el numero de faltas:");
+                            int nwNumFaltas = sc.nextInt();
+                            sc.nextLine();
+                            ((EmpleadoBase) e).setNumFaltas(nwNumFaltas);
+                            System.out.println("\n");
+                            System.out.println("Se ha modificado dejando al trabajador con lo siguiente: ");
+                            System.out.println(e.toString());
+                            break;
+                        case "2":
+                            System.out.println("Regresando al menu...");
+                            break;
+                        default:
+                            System.out.println("Ingrese una entrada valida.");
+                            break;
+                    }
                 }
             }
         }
          // En caso de que no exista el empleado o se ingrese una entrada no valida
          if (!hayEmpleado) {
-            System.out.println("No existe el empleado.");
+            System.out.println("No existe el empleado o no es base.");
         }
 	}
     
