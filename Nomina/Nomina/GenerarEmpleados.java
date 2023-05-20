@@ -4,7 +4,8 @@ import java.util.Random;
 
 public abstract class GenerarEmpleados {
     static Random rnd = new Random();
-    private static ArrayList<Puesto> puestos = crearListaPuestos();
+    private static ArrayList<Puesto> puestosM = crearListaPuestosM();
+    private static ArrayList<Puesto> puestosF = crearListaPuestosF();
     private static ArrayList<Integer> numEmpleados = new ArrayList<Integer>();
     private static String [] nombresMasculinos = {"Pedro","Pablo","Juan","Ignacio","Diego","Mario","Jose","Panfilo","Angel","Saul", "Isaac", "Kevin" , "Martin", "Juan", "Inmanwell", "Emmanuel", "Jorge", "Daniel", "Hugo", "Jesus", "Carlos", "Ricardo", "Antonio", "Alfredo", "Omar", "Fernando"};
     private static String [] nombresFemeninos = {"Carla","Paula","Sofia","Julia","Alma","Maria","Frida","Julieta","Abril","Alexa", "Melania", "Valentina", "Mariana", "Samirah", "Lya", "Dara", "Ana", "Eidi", "Fernanda", "Luna", "Rosa", "Melani", "Joseline", "Camila", "Karla", "Karen", "Gabriela"};
@@ -14,9 +15,9 @@ public abstract class GenerarEmpleados {
         // 0 = hombre ; 1 = mujer
         EmpleadoBase eB;
         if(sexo == 0){
-            eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'm', asignarPuesto(), "2301"+generarNumEmpleado(), rnd.nextInt(3));
+            eB = new EmpleadoBase(nombresMasculinos[rnd.nextInt(nombresMasculinos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'm', asignarPuesto(sexo), "2301"+generarNumEmpleado(), rnd.nextInt(3));
         } else {
-           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(nombresFemeninos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'f', asignarPuesto(), "2301"+generarNumEmpleado(), rnd.nextInt(3));
+           eB = new EmpleadoBase(nombresFemeninos[rnd.nextInt(nombresFemeninos.length)], apellidos[rnd.nextInt(apellidos.length)], (byte)(rnd.nextInt(47)+18), 'f', asignarPuesto(sexo), "2301"+generarNumEmpleado(), rnd.nextInt(3));
         }
         return eB;
     }
@@ -54,24 +55,35 @@ public abstract class GenerarEmpleados {
         return eC;
     }
 
-    public static Puesto asignarPuesto(){
+    public static Puesto asignarPuesto(int sexo){
         Puesto p;
-        if(puestos.size() != 0){
-            int n = puestos.size();
-            int random = rnd.nextInt(n);
-            p = puestos.get(random);
-            puestos.remove(random);
-            
+        if(puestosM.size() != 0){
+            int random = rnd.nextInt(puestosM.size());
+            if(sexo == 0){
+                p = puestosM.get(random);
+            }else{
+                p = puestosF.get(random);
+            }
+            puestosM.remove(random);
+            puestosF.remove(random);
         }else{
             p = null; // Solo en caso de que se use el metodo y ya no haya puestos
         }
         return p;
-
     }
 
-    public static ArrayList<Puesto> crearListaPuestos(){
+    public static ArrayList<Puesto> crearListaPuestosM(){
         ArrayList<Puesto> puestos = new ArrayList<Puesto>();
         Puesto [] p = {Puesto.DIRECTOR, Puesto.JEFE_OFICINA, Puesto.PROGRAMADOR, Puesto.PROGRAMADOR, Puesto.PROGRAMADOR, Puesto.PROGRAMADOR, Puesto.OPERADOR, Puesto.OPERADOR, Puesto.OPERADOR, Puesto.INTENDENTE, Puesto.INTENDENTE, Puesto.INTENDENTE, Puesto.SECRETARIO};
+        for(int i = 0; i < p.length; i++){
+            puestos.add(i, p[i]);
+        }
+        return puestos;
+    }
+
+    public static ArrayList<Puesto> crearListaPuestosF(){
+        ArrayList<Puesto> puestos = new ArrayList<Puesto>();
+        Puesto [] p = {Puesto.DIRECTORA, Puesto.JEFA_OFICINA, Puesto.PROGRAMADORA, Puesto.PROGRAMADORA, Puesto.PROGRAMADORA, Puesto.PROGRAMADORA, Puesto.OPERADORA, Puesto.OPERADORA, Puesto.OPERADORA, Puesto.INTENDENTE, Puesto.INTENDENTE, Puesto.INTENDENTE, Puesto.SECRETARIA};
         for(int i = 0; i < p.length; i++){
             puestos.add(i, p[i]);
         }

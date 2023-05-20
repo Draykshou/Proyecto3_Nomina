@@ -13,7 +13,7 @@ public class Menu {
     public static void main(String[]args){
         inicializarListaEmpleados(empleados);
         inicializarEmpladosTemporales(empleados, rnd.nextInt(74)+25);
-       String opcion;
+        String opcion;
         do {
             limpiarConsola();
             opcion = elegirOpcion();
@@ -287,6 +287,4 @@ public class Menu {
         System.out.print("\nPresiona enter para continuar  . . . ");
         sc.nextLine();
     }
-
 }
-// quiero pene quiero pene

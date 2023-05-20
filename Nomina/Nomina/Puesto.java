@@ -1,20 +1,23 @@
 package Nomina;
 
 public enum Puesto{
-    SECRETARIO(2500, "Secretario", "Secretaria"),
-    INTENDENTE(2300, "Intendente", "Intendente"),
-    OPERADOR(3500, "Operador", "Operadora"),
-    PROGRAMADOR(8000, "Programador", "Programadora"),
-    JEFE_OFICINA(5000, "Jefe oficina","Jefa oficina"),
-    DIRECTOR(12000, "Director","Directora");
+    SECRETARIO(2500, "Secretario"),
+    SECRETARIA(2500, "Secretaria"),
+    INTENDENTE(2300, "Intendente"),
+    OPERADOR(3500, "Operador"),
+    OPERADORA(3500, "Operadora"),
+    PROGRAMADOR(8000, "Programador"),
+    PROGRAMADORA(8000, "Programadora"),
+    JEFE_OFICINA(5000, "Jefe oficina"),
+    JEFA_OFICINA(5000, "Jefa Oficina"),
+    DIRECTOR(12000, "Director"),
+    DIRECTORA(12000, "Directora");
 
     private final float sueldo;
-    private final String nombrePuestoMasculino;
-    private final String nombrePuestoFemenino;
-    private Puesto(float sueldo, String nombrePuestoMasculino, String nombrePuestoFemenino){
+    private final String nombrePuestoGenero;
+    private Puesto(float sueldo, String nombrePuestoGenero){
         this.sueldo = sueldo;
-        this.nombrePuestoMasculino = nombrePuestoMasculino;
-        this.nombrePuestoFemenino = nombrePuestoFemenino;
+        this.nombrePuestoGenero = nombrePuestoGenero;
         
     }
 
@@ -22,11 +25,8 @@ public enum Puesto{
         return sueldo;
     }
 
-    public String getNombrePuestoMasculino(){
-        return nombrePuestoMasculino;
+    public String getPuesto(){
+        return nombrePuestoGenero;
     }
 
-    public String getNombrePuestoFemenino(){
-        return nombrePuestoFemenino;
-    }
 }
