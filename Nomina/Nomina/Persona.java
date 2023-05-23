@@ -47,4 +47,13 @@ public class Persona{
     public String toString(){
         return String.format(" %-20.20s | %-4s | %-4s |", this.nombre+" "+this.apellido, this.sexo, this.edad);
     }
+
+    public boolean equals(Object o){
+        boolean e = false;
+        if(o instanceof Persona){
+            Persona p = (Persona) o;
+            e = this.nombre.equals(p.nombre) && this.apellido.equals(p.apellido) && this.edad == p.edad && Character.toString(sexo).equals(Character.toString(p.sexo));
+        }
+        return e;
+    }
 }
