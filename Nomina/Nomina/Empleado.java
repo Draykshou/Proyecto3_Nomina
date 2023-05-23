@@ -1,5 +1,5 @@
 package Nomina;
-public abstract class Empleado extends Persona{
+public abstract class Empleado extends Persona implements Comparable<Empleado>{
     protected String numEmpleado;
 
     public Empleado(String nombre, String apellido,byte edad, char sexo, String numEmpleado){
@@ -30,5 +30,21 @@ public abstract class Empleado extends Persona{
 
     public String toString(){
         return String.format("| %-12s |", this.numEmpleado) + super.toString();
+    }
+
+    public boolean equals(Object o){
+        boolean e = false;
+        if(o instanceof Empleado){
+            Empleado em = (Empleado) o;
+            e = this.numEmpleado == em.numEmpleado;
+        }
+        return e;
+    }
+
+    public int compareTo(Empleado e) {
+        int i = this.numEmpleado.compareTo(e.numEmpleado);
+        if (i < 0 ) return -1; // numEmpleado de este objeto es mas grande
+        if (i > 0 ) return 1; // numEmpleado de otro objeto es mas grande
+        return 0; // son iguales
     }
 }

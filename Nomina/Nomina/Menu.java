@@ -4,6 +4,7 @@ package Nomina;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Collections;
 public class Menu {    
     private static ArrayList<Empleado> empleados = new ArrayList<Empleado>();
     private static ArrayList<String> nominas = new ArrayList<String>();
@@ -43,7 +44,12 @@ public class Menu {
 
                 pausarPrograma();
                 break;
-            case "6": // Salir
+            case "6":
+                Collections.sort(empleados);
+                imprimirNomina(empleados);
+                pausarPrograma();
+                break;
+            case "7": // Salir
                     System.out.println("Saliendo del programa.");
                     break;
 			default: // entrada invalida
@@ -51,7 +57,7 @@ public class Menu {
 				pausarPrograma();
 				break;
 			}
-		} while (!opcion.equals("6"));
+		} while (!opcion.equals("7"));
 	}
     
     public static String elegirOpcion(){
@@ -61,11 +67,12 @@ public class Menu {
         System.out.println("3. Ver Empleado.");
         System.out.println("4. Modificar Empleado.");
         System.out.println("5. Cantidad de dinero para pagar a empleados temporales.");
-        System.out.println("6. Salir del programa.\n");
+        System.out.println("6. Ordenar Nomina");
+        System.out.println("7. Salir del programa.\n");
         return sc.nextLine().trim();
     }
 
-      public static void imprimirNomina(ArrayList<Empleado> e){
+    public static void imprimirNomina(ArrayList<Empleado> e){
         String salida = String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total");
         for(int i = 0; i < e.size(); i++){
             salida += e.get(i).ImprimirDatosNomina();
@@ -75,6 +82,7 @@ public class Menu {
         System.out.print(salida);
         System.out.println("---------------------------------------------------------------------------------------------------------------------------");
     }
+    
     public static void sigQuincena(ArrayList<Empleado> e){
     	
     	for (int i=0; i<e.size(); i++) {
