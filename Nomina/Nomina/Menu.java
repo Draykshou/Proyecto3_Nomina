@@ -1,10 +1,8 @@
 // Clase para probar los ojetos
 
 package Nomina;
-import java.util.Random;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.io.*;
+import java.util.*;
 public class Menu {    
     private static ArrayList<Empleado> empleados = new ArrayList<Empleado>();
     private static ArrayList<String> nominas = new ArrayList<String>();
@@ -14,40 +12,52 @@ public class Menu {
     public static void main(String[]args){
         inicializarListaEmpleados(empleados);
         inicializarEmpladosTemporales(empleados, rnd.nextInt(74)+25);
-        String opcion;
+        Collections.sort(empleados);
+        String op;
         do {
             limpiarConsola();
-            opcion = elegirOpcion();
-            switch(opcion){
-            case "1": // Imprimir Nomina
-				imprimirNomina(empleados);
-				pausarPrograma();
-				break;
-            case "2":
-                sigQuincena(empleados);
-                imprimirNomina(empleados);
+            System.out.println("¿Que desea realizar?\n");
+            System.out.println("1. Imprimir nomina");
+            System.out.println("2. Siguiente quincena.");
+            System.out.println("3. Ver Empleado.");
+            System.out.println("4. Modificar Empleado.");
+            System.out.println("5. Cantidad de dinero para pagar a empleados temporales.");
+            System.out.println("6. Ordenar Nomina");
+            System.out.println("7. Salir del programa.\n");
+            op = sc.nextLine().trim();
+            
+            switch(op){
+            case "1": // Imprimir nomina
+                File archivoNomina = new File("./Nomina/Nomina"+(nominas.size()+1)+".txt");
+                if(!archivoNomina.exists()){
+                    try {
+                        sigQuincena(empleados);
+                        imprimirNomina(empleados);
+                    } catch (NumberOutOfRangeException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    sc.nextLine(); // El escaner de java haciendo de la suyas...
+                }
+                else{
+                    System.out.println("El archivo Nomina"+nominas.size()+".txt ya existe");
+                }
                 pausarPrograma();
                 break;
-			case "3": // Ver empleado
-				imprimirNomina(empleados);
-				verEmpleado();
-				pausarPrograma();
+            case "2": // Siguiente quincena
+                pausarPrograma();
+                break;
+			case "3": 
+                verEmpleado();
+                pausarPrograma();
 				break;
-			case "4": // Modificar empleado
-                imprimirNomina(empleados);
-				modificarFaltasEmpleado();
-				pausarPrograma();
+			case "4": 
+
 				break;
             case "5":
-                ArrayList<Empleado> temporales = CrearListaEmpledosTemporales(empleados);
-                System.out.println(ImprimirTablaDivisas(CantidadBilletes(temporales), temporales));
 
-                pausarPrograma();
                 break;
             case "6":
-                Collections.sort(empleados);
-                imprimirNomina(empleados);
-                pausarPrograma();
+
                 break;
             case "7": // Salir
                     System.out.println("Saliendo del programa.");
@@ -57,30 +67,34 @@ public class Menu {
 				pausarPrograma();
 				break;
 			}
-		} while (!opcion.equals("7"));
+		} while (!op.equals("7"));
 	}
-    
-    public static String elegirOpcion(){
-        System.out.println("¿Que desea realizar?\n");
-        System.out.println("1. Imprimir la nomina de empleados.");
-        System.out.println("2. Siguiente quincena.");
-        System.out.println("3. Ver Empleado.");
-        System.out.println("4. Modificar Empleado.");
-        System.out.println("5. Cantidad de dinero para pagar a empleados temporales.");
-        System.out.println("6. Ordenar Nomina");
-        System.out.println("7. Salir del programa.\n");
-        return sc.nextLine().trim();
-    }
 
-    public static void imprimirNomina(ArrayList<Empleado> e){
-        String salida = String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total");
-        for(int i = 0; i < e.size(); i++){
-            salida += e.get(i).ImprimirDatosNomina();
+    public static void imprimirNomina(ArrayList<Empleado> e) throws NumberOutOfRangeException{
+        System.out.println("Ingrese la fecha de la nomina D/M/AAAA  Nota: El dia maximo es el 30");
+        try{
+            int d = Integer.parseInt(sc.next()), m = Integer.parseInt(sc.next()), a = Integer.parseInt(sc.next());
+            if(d < 0 || d > 30 || m < 0 || m > 12 || (m == 2 && (d < 0 || d > 28)) || a < 2000 || a > 2030){
+                NumberOutOfRangeException rangeException = new NumberOutOfRangeException("Los numeros estan fuera de rango");
+                throw rangeException;
+            }
+            File archivo = new File("./Nomina/Nomina"+(nominas.size()+1)+".txt");
+            FileWriter fw = new FileWriter(archivo);
+            PrintWriter archivoSalida = new PrintWriter(fw);
+            String nomina = "Nomina del dia: " +d+"/"+m+"/"+a+"\n";
+            nomina += String.format("| %-12s | %-20s | %-4s | %-18s | %-12s | %-10s | %-10s | %-12s |%n","N° Empleado", "Nombre", "Sexo", "Puesto","Sueldo Bruto", "Bono","Impuestos", "Sueldo Total");
+            for(int i = 0; i < e.size(); i++){
+                nomina += e.get(i).ImprimirDatosNomina();
+            }
+            nominas.add(nomina);
+            archivoSalida.print(nomina);
+            archivoSalida.close();
+            System.out.println("El archivo " + "Nomina"+(nominas.size())+".txt" + " Ha sido creado");
+        }catch(NumberFormatException nfe){
+            System.out.println("El dato no es numerico");
+        }catch(IOException io){
+            System.out.println(io);
         }
-        nominas.add(salida); // guardar todas las nominas
-        System.out.println("\n---------------------------------------------------------------------------------------------------------------------------");
-        System.out.print(salida);
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
     }
     
     public static void sigQuincena(ArrayList<Empleado> e){
@@ -164,7 +178,7 @@ public class Menu {
         }
 	}
     
-    // -----------------------------------Metodos inicializador -----------------------------------------------
+    // -----------------------------------Metodos inicializadores -----------------------------------------------
     public static ArrayList<Empleado> inicializarListaEmpleados(ArrayList<Empleado> e){
         for(int i = 0; i < 13; i++){
             e.add(GenerarEmpleados.crearEmpleadoBase(rnd.nextInt(2)));
@@ -290,7 +304,6 @@ public class Menu {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
     public static void pausarPrograma() {
         System.out.print("\nPresiona enter para continuar  . . . ");
         sc.nextLine();
